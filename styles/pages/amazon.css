@@ -130,7 +130,8 @@
   flex: 1;
 }
 
-.added-to-cart {
+.added-to-cart,
+.add-to-cart-done{
   color: rgb(6, 125, 98);
   font-size: 16px;
 
@@ -142,6 +143,10 @@
      be invisible. Use JavaScript to change the
      opacity and make it visible. */
   opacity: 0;
+}
+
+.add-to-cart-done{
+  opacity: 100;
 }
 
 .added-to-cart img {
