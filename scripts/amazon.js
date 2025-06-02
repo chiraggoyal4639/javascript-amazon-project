@@ -24,7 +24,7 @@ products.forEach((product)=>{
       </div>
 
       <div class="product-price">
-        $${(product.priceCents / 100).toFixed(2)}
+        $${formatCurrency(matchingProduct.priceCents)}
       </div>
 
       <div class="product-quantity-container">
@@ -74,4 +74,3 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 
   })
 })
-console.log(cart);

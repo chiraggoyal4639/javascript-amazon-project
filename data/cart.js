@@ -1,4 +1,4 @@
-export const cart= [];
+export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 export function addToCart(productId, timeoutId){
   const selectElement = document.querySelector(`.js-${productId}-quantity`);
@@ -26,7 +26,7 @@ export function addToCart(productId, timeoutId){
       quantity
     });
   }
+  localStorage.setItem('cart', JSON.stringify(cart));
 
-  console.log(cart);
   return { quantity, timeoutId };
 }
