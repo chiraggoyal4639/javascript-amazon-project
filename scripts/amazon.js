@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 let productsHTML= '';
@@ -65,30 +65,10 @@ let timeoutId;
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click',()=>{
     const { productId }= button.dataset;
-
-    const selectElement = document.querySelector(`.js-${productId}-quantity`);
-    const quantity = Number(selectElement.value);
-    selectElement.value = 1;
-
-    const addedElement= document.querySelector(`.js-${productId}-added`);
-    addedElement.classList.add('add-to-cart-done');
-
-    clearTimeout(timeoutId);
-    timeoutId= setTimeout(() => {
-      addedElement.classList.remove('add-to-cart-done')
-    }, 2000);
-
-    cart.forEach((item) => {
-      if(item.id===productId){
-        item.quantity+=quantity;
-      } else {
-        cart.push({
-          productId,
-          quantity
-        });
-      }
-    })
-    cartQuantity+=quantity;
+    const result = addToCart(productId, timeoutId);
+    let quantity = result.quantity;
+    timeoutId = result.timeoutId;
+    cartQuantity += quantity;
     
     document.querySelector('.js-cart-quantity').innerHTML= cartQuantity;
   })
