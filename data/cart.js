@@ -13,15 +13,20 @@ export function addToCart(productId, timeoutId){
     addedElement.classList.remove('add-to-cart-done')
   }, 2000);
 
+  let found = false;
   cart.forEach((cartItem) => {
-    if(cartItem.productId===productId){
-      cartItem.quantity+=quantity;
-    } else {
-      cart.push({
-        productId,
-        quantity
-      });
+    if (cartItem.productId === productId) {
+      cartItem.quantity += quantity;
+      found = true;
     }
-  })
+  });
+  if (!found) {
+    cart.push({
+      productId,
+      quantity
+    });
+  }
+
+  console.log(cart);
   return { quantity, timeoutId };
 }
