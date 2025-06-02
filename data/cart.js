@@ -30,3 +30,13 @@ export function addToCart(productId, timeoutId){
 
   return { quantity, timeoutId };
 }
+
+export function removeFromCart(productId){
+  const newCart = [];
+  cart.forEach((cartItem)=>{
+    if (cartItem.productId !== productId) {
+      newCart.push(cartItem);
+    }
+  });
+  cart = newCart;
+}
