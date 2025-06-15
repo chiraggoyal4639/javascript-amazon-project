@@ -3,6 +3,13 @@ export let cart = JSON.parse(localStorage.getItem('cart')) || [];
 export function saveToStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
+export function getCartQuantity(){
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  return cartQuantity;
+}
 
 export function addToCart(productId, timeoutId){
   const selectElement = document.querySelector(`.js-${productId}-quantity`);
