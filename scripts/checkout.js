@@ -1,4 +1,4 @@
-import {cart, removeFromCart, getCartQuantity, updateQuantity} from '../data/cart.js';
+import {cart, removeFromCart, getCartQuantity, updateQuantity, updateDeliveryOption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
@@ -20,7 +20,7 @@ cart.forEach((cartItem) => {
     }
   })
   const dateString = calculateDeliveryDate(deliveryOption);
-  
+
   products.forEach((product)=>{
     if(product.id===productId){
       matchingProduct = product;
@@ -96,7 +96,9 @@ function deliveryOptionsHTML(productId, cartItem) {
     const isChecked = deliveryOption.id == cartItem.deliveryOptionId;
 
     html += `
-      <div class="delivery-option">
+      <div class="delivery-option js-delivery-option"
+        data-product-id="${productId}"
+        data-delivery-option-id="${deliveryOption.id}">
         <input type="radio"
           ${isChecked ? 'Checked' : ''}
           class="delivery-option-input"
@@ -115,8 +117,14 @@ function deliveryOptionsHTML(productId, cartItem) {
   return html;
 }
 
-
 document.querySelector('.js-order-summary').innerHTML= cartSummaryHTML;
+
+document.querySelectorAll('.js-delivery-option').forEach((element)=>{
+  element.addEventListener('click', ()=>{
+    const {productId, deliveryOptionId} = element.dataset;
+    updateDeliveryOption(productId, deliveryOptionId)
+  })
+})
 
 document.querySelectorAll('.js-delete-link').forEach((link)=>{
   link.addEventListener('click', () => {
@@ -151,6 +159,9 @@ function saveNewQuantity(productId, quantityInput){
   
   if (newQuantity < 0 || (newQuantity % 1) != 0){
     alert('Invalid Cart Quantity');
+    return;
+  } else if(newQuantity > 10){
+    alert('Limit of max quantity for order at one time is 10');
     return;
   }
   updateQuantity(productId, newQuantity);

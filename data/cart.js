@@ -35,7 +35,7 @@ export function addToCart(productId, timeoutId){
     cart.push({
       productId,
       quantity,
-      deliveryOptionId: 1
+      deliveryOptionId: '1'
     });
   }
   saveToStorage('cart', cart);
@@ -62,4 +62,12 @@ export function updateQuantity(productId, newQuantity){
       break
     }
   }
+}
+export function updateDeliveryOption(productId, newDeliveryOptionId){
+  cart.forEach((cartItem) => {
+    if(cartItem.productId === productId){
+      cartItem.deliveryOptionId = newDeliveryOptionId;
+    }
+  })
+  saveToStorage('cart', cart);
 }
