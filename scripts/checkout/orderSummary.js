@@ -1,4 +1,4 @@
-import {cart, removeFromCart, getCartQuantity, updateQuantity, updateDeliveryOption} from '../../data/cart.js';
+import {cart, removeFromCart, updateQuantity, updateDeliveryOption} from '../../data/cart.js';
 import {getItemById, products} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import {deliveryOptions, calculateDeliveryDate, deliveryOptionsHTML} from '../../data/deliveryOptions.js'
@@ -21,12 +21,12 @@ function saveNewQuantity(productId, quantityInput){
   const quantityLabel = document.querySelector(`.js-quantity-label-${productId}`);
   quantityLabel.innerHTML = newQuantity;
   
-  renderCheckoutHeader();
-  renderPaymentSummary();
-  
   const container = document.querySelector(`.js-cart-item-container-${productId}`);
   quantityInput.value='';
   container.classList.remove('is-editing-quantity');
+
+  renderCheckoutHeader();
+  renderPaymentSummary();
 }
 
 export function renderOrderSummary(){
