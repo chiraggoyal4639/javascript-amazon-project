@@ -19,13 +19,8 @@ cart.forEach((cartItem) => {
       return;
     }
   })
-  const today = dayjs();
-  const deliveryDate = today.add(
-    deliveryOption.deliveryDays,
-    'days'
-  )
-  const dateString = deliveryDate.format('dddd, MMMM D');
-
+  const dateString = calculateDeliveryDate(deliveryOption);
+  
   products.forEach((product)=>{
     if(product.id===productId){
       matchingProduct = product;
@@ -82,16 +77,20 @@ cart.forEach((cartItem) => {
   `;
 });
 
+function calculateDeliveryDate(deliveryOption){
+  const today = dayjs();
+  const deliveryDate = today.add(
+    deliveryOption.deliveryDays,
+    'days'
+  );
+  return deliveryDate.format('dddd, MMMM D');
+}
+
 function deliveryOptionsHTML(productId, cartItem) {
   let html = '';
 
   deliveryOptions.forEach((deliveryOption) => {
-    const today = dayjs();
-    const deliveryDate = today.add(
-      deliveryOption.deliveryDays,
-      'days'
-    );
-    const dateString = deliveryDate.format('dddd, MMMM D');
+    const dateString = calculateDeliveryDate(deliveryOption);
     const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrency(deliveryOption.priceCents)}`;
 
     const isChecked = deliveryOption.id == cartItem.deliveryOptionId;
