@@ -1,49 +1,10 @@
 import {cart, removeFromCart, getCartQuantity, updateQuantity, updateDeliveryOption} from '../../data/cart.js';
 import {getItemById, products} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import {deliveryOptions} from '../../data/deliveryOptions.js'
+import {deliveryOptions, calculateDeliveryDate, deliveryOptionsHTML} from '../../data/deliveryOptions.js'
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 
-function calculateDeliveryDate(deliveryOption){
-  const today = dayjs();
-  const deliveryDate = today.add(
-    deliveryOption.deliveryDays,
-    'days'
-  );
-  return deliveryDate.format('dddd, MMMM D');
-}
-function deliveryOptionsHTML(productId, cartItem) {
-  let html = '';
-
-  deliveryOptions.forEach((deliveryOption) => {
-    const dateString = calculateDeliveryDate(deliveryOption);
-    const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrency(deliveryOption.priceCents)}`;
-
-    const isChecked = deliveryOption.id == cartItem.deliveryOptionId;
-
-    html += `
-      <div class="delivery-option js-delivery-option"
-        data-product-id="${productId}"
-        data-delivery-option-id="${deliveryOption.id}">
-        <input type="radio"
-          ${isChecked ? 'Checked' : ''}
-          class="delivery-option-input"
-          name="delivery-option-${productId}">
-        <div>
-          <div class="delivery-option-date">
-            ${dateString}
-          </div>
-          <div class="delivery-option-price">
-            ${priceString} - Shipping
-          </div>
-        </div>
-      </div>
-    `
-  });
-  return html;
-}
 function saveNewQuantity(productId, quantityInput){
 
   let newQuantity= Number(quantityInput.value);
@@ -66,8 +27,8 @@ function saveNewQuantity(productId, quantityInput){
   const container = document.querySelector(`.js-cart-item-container-${productId}`);
   quantityInput.value='';
   container.classList.remove('is-editing-quantity');
-
 }
+
 export function renderOrderSummary(){
   let cartSummaryHTML= '';
 
