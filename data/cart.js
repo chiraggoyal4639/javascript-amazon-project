@@ -34,7 +34,8 @@ export function addToCart(productId, timeoutId){
   if (!found) {
     cart.push({
       productId,
-      quantity
+      quantity,
+      deliveryOptionId: 1
     });
   }
   saveToStorage('cart', cart);
