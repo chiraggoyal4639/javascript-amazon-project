@@ -11,7 +11,6 @@ describe('test suite: addToCart', ()=>{
         deliveryOptionId: '1'
       }]);
     });
-    console.log(localStorage.getItem('cart'));
     loadFromStorage();
 
     addToCartArray('5968897c-4d27-4872-89f6-5bcb052746d7', 1);
@@ -29,11 +28,9 @@ describe('test suite: addToCart', ()=>{
     spyOn(localStorage, 'getItem').and.callFake(()=>{
       return JSON.stringify([]);
     });
-    console.log(localStorage.getItem('cart'));
     loadFromStorage();
     
     addToCartArray('5968897c-4d27-4872-89f6-5bcb052746d7', 1);
-    console.log(localStorage.getItem('cart'));
 
     expect(cart.length).toEqual(1);
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
