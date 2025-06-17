@@ -68,14 +68,12 @@ updateCartQuantity();
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click',()=>{
     const { productId }= button.dataset;
-    const result = addToCart(productId, timeoutId);
-    let quantity = result.quantity;
-    timeoutId = result.timeoutId;
+    const quantity = addToCart(productId);
     cartQuantity += quantity;
-    
     updateCartQuantity();
   })
-})
+});
+
 function updateCartQuantity(){
   document.querySelector('.js-cart-quantity').innerHTML= cartQuantity;
 }

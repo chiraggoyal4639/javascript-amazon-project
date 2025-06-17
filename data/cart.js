@@ -1,4 +1,9 @@
-export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+export let cart;
+loadFromStorage();
+
+export function loadFromStorage(){
+  cart = JSON.parse(localStorage.getItem('cart')) || [];
+}
 
 export function saveToStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
@@ -11,7 +16,9 @@ export function getCartQuantity(){
   return cartQuantity;
 }
 
-export function addToCart(productId, timeoutId){
+let timeoutId;
+
+export function addToCart(productId){
   const selectElement = document.querySelector(`.js-${productId}-quantity`);
   const quantity = Number(selectElement.value);
   selectElement.value = 1;
@@ -23,7 +30,7 @@ export function addToCart(productId, timeoutId){
   timeoutId= setTimeout(() => {
     addedElement.classList.remove('add-to-cart-done')
   }, 2000);
-
+  // console.log(timeoutId);
   let found = false;
   cart.forEach((cartItem) => {
     if (cartItem.productId === productId) {
@@ -39,8 +46,7 @@ export function addToCart(productId, timeoutId){
     });
   }
   saveToStorage('cart', cart);
-
-  return { quantity, timeoutId };
+  return quantity;
 }
 export function removeFromCart(productId){
   const newCart = [];
