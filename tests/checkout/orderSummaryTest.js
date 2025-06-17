@@ -49,6 +49,22 @@ describe('test suite: renderOrderSummary', () => {
       document.querySelector(`.js-product-quantity-${productId2}`).innerText
     ).toContain('Quantity: 1');
     
+    expect(
+      document.querySelector(`.js-product-name-${productId1}`).innerText
+    ).toEqual("Women's Chiffon Beachwear Cover Up - Black");
+
+    expect(
+      document.querySelector(`.js-product-name-${productId2}`).innerText
+    ).toEqual('Waterproof Knit Athletic Sneakers - Gray');
+
+    expect(
+      document.querySelector(`.js-product-price-${productId1}`).innerText
+    ).toEqual('$20.70');
+
+    expect(
+      document.querySelector(`.js-product-price-${productId2}`).innerText
+    ).toEqual('$33.90');
+
   });
 
   it('removes a product', () => {
@@ -66,9 +82,35 @@ describe('test suite: renderOrderSummary', () => {
     expect(
       document.querySelector(`.js-cart-item-container-${productId2}`)
     ).not.toEqual(null);
+    
+    expect(
+      document.querySelector(`.js-product-name-${productId2}`).innerText
+    ).toEqual('Waterproof Knit Athletic Sneakers - Gray');
+
+    expect(
+      document.querySelector(`.js-product-price-${productId2}`).innerText
+    ).toEqual('$33.90');
 
     expect(cart.length).toEqual(1);
     expect(cart[0].productId).toEqual(productId2);
-
   });
+
+  it('updates the delivery option', () => {
+    document.querySelector(`.js-delivery-option-${productId1}-3`).click();
+    expect(
+      document.querySelector(`.js-delivery-option-input-${productId1}-3`).checked
+    ).toEqual(true);
+
+    expect(cart.length).toEqual(2);
+    expect(cart[0].productId).toEqual(productId1);
+    expect(cart[0].deliveryOptionId).toEqual('3');
+
+    expect(
+      document.querySelector('.js-payment-summary-shipping').innerText
+    ).toEqual('$9.99');
+    expect(
+      document.querySelector('.js-payment-summary-total').innerText
+    ).toEqual('$93.82');
+  });
+
 });
