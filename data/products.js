@@ -1,8 +1,4 @@
-import { formatCurrency } from "../scripts/utils/money.js";
-
-export function getItemById(itemId, items){
-  return items.find(item => item.id == itemId);
-}
+import { formatCurrency } from "../scripts/utils/utils.js";
 
 export class Product {
   id;
@@ -43,7 +39,6 @@ export class Clothing extends Product {
     `;
   }
 }
-
 export class Appliance extends Product{
   instructionsLink;
   warrantyLink;
@@ -84,7 +79,6 @@ export function loadProducts(fun) {
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
-loadProducts();
 
 /*
 export const products = [

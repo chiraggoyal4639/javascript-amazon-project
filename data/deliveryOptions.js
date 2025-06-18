@@ -1,7 +1,7 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { formatCurrency } from '../scripts/utils/money.js'
+import { formatCurrency } from '../scripts/utils/utils.js'
 import { cart , saveToStorage } from './cart.js';
-import { getItemById } from './products.js';
+import { getItemById } from '../scripts/utils/utils.js';
 
 export const deliveryOptions = [{
   id : '1',

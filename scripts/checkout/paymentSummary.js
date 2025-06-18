@@ -1,7 +1,7 @@
 import {cart, getCartQuantity} from '../../data/cart.js'
 import { deliveryOptions } from '../../data/deliveryOptions.js';
-import {getItemById, products} from '../../data/products.js'
-import { formatCurrency } from '../utils/money.js';
+import {products} from '../../data/products.js'
+import { getItemById, formatCurrency } from '../utils/utils.js';
 
 export function renderPaymentSummary() {
   let productPriceCents = 0;
