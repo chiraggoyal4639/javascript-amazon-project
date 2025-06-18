@@ -4,7 +4,7 @@ export function getItemById(itemId, items){
   return items.find(item => item.id == itemId);
 }
 
-class Product {
+export class Product {
   id;
   image;
   name;
@@ -28,7 +28,7 @@ class Product {
     return '';
   }
 }
-class Clothing extends Product {
+export class Clothing extends Product {
   sizeChartLink;
   constructor(productDetails){
     super(productDetails);
@@ -37,14 +37,14 @@ class Clothing extends Product {
   extraInfoHTML(){
     // super.extraInfoHTML();
     return `
-      <a href= "${this.sizeChartLink}" target= "_blank">
+      <a href="${this.sizeChartLink}" target= "_blank">
         Size chart
       </a>
     `;
   }
 }
 
-class Appliance extends Product{
+export class Appliance extends Product{
   instructionsLink;
   warrantyLink;
   constructor(productDetails){
@@ -54,10 +54,10 @@ class Appliance extends Product{
   }
    extraInfoHTML(){
     return `
-      <a href= "${this.instructionsLink}" target= "_blank">
+      <a href="${this.instructionsLink}" target= "_blank">
         Instructions
       </a>
-      <a href= "${this.warrantyLink}" target= "_blank">
+      <a href="${this.warrantyLink}" target= "_blank">
         Warranty
       </a>
     `;
