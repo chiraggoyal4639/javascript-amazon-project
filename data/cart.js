@@ -49,8 +49,6 @@ export function addToCart(productId){
     addedElement.classList.remove('add-to-cart-done')
   }, 2000);
   addToCartArray(productId, quantity);
-  
-  return quantity;
 }
 export function removeFromCart(productId){
   const newCart = [];
