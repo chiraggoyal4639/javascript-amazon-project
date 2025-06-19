@@ -1,13 +1,13 @@
 import { renderOrderSummary } from '../../scripts/checkout/orderSummary.js';
 import { loadFromStorage, cart } from '../../data/cart.js';
-import { loadProducts } from '../../data/products.js';
+import { loadProductsFetch } from '../../data/products.js';
 
 describe('test suite: renderOrderSummary', () => {
   const productId1 = '5968897c-4d27-4872-89f6-5bcb052746d7';
   const productId2 = '58b4fc92-e98c-42aa-8c55-b6b79996769a';
 
   beforeAll((done) => {
-    loadProducts(() => {
+    loadProductsFetch().then(() => {
       done();
     });
   })
