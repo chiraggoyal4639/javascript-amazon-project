@@ -8,7 +8,7 @@ export function addOrder(order){
   orders.unshift(order);
   saveToStorage('orders', orders);
 }
-function getOrderTime(orderTime){
+export function getOrderTime(orderTime){
   const date = new Date(orderTime);
   const day = date.getUTCDate();
   const month = date.toLocaleString("en-US", { month: "long", timeZone: "UTC" });
@@ -69,7 +69,7 @@ export function addOrderHTML(){
         </div>
 
         <div class="product-actions">
-          <a href="tracking.html">
+          <a href="tracking.html?orderId=${order.id}&&productId=${productId}">
             <button class="track-package-button button-secondary">
               Track package
             </button>
