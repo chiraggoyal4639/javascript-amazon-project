@@ -1,4 +1,4 @@
-import {cart, getCartQuantity} from '../../data/cart.js'
+import {cart, getCartQuantity, saveToStorage, updateCartQuantity} from '../../data/cart.js'
 import { deliveryOptions } from '../../data/deliveryOptions.js';
 import {products} from '../../data/products.js'
 import { getItemById, formatCurrency } from '../utils/utils.js';
@@ -81,8 +81,12 @@ export function renderPaymentSummary() {
 
         const order = await response.json();
         addOrder(order);
+        cart.length = 0;
+        saveToStorage('cart', cart);
+        updateCartQuantity();
+
       } catch (error) {
-        console.log('Unexpected error. Please try again later.');
+        alert('Could not place order. Please try again later.');
       }
       window.location.href = 'orders.html';
     })
