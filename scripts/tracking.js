@@ -45,7 +45,7 @@ function addTrackingHTML() {
     <img class="product-image" src="${productImage}">
 
     <div class="progress-labels-container">
-      <div class="progress-label">
+      <div class="progress-label current-status">
         Preparing
       </div>
       <div class="progress-label ${progress >= 50 ? 'current-status' : ''}">

@@ -159,3 +159,71 @@
   padding: 8px;
   border-radius: 50px;
 }
+.no-results {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.no-results::before {
+  content: "🔍";
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.no-results h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.no-results p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.no-results a {
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #067d62;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.no-results a:hover {
+  background-color: #055a44;
+}
+
+@media (max-width: 480px) {
+  .no-results {
+    padding: 30px 20px;
+    margin: 40px 10px;
+  }
+  .no-results::before {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+  .no-results h2 {
+    font-size: 1.3rem;
+  }
+}
+.js-products-grid.empty-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  min-height: 300px;
+  padding: 40px 0;
+}

@@ -5,9 +5,38 @@ import {formatCurrency} from './utils/utils.js'
 loadProducts(renderProductsGrid);
 
 function renderProductsGrid() {
-  let productsHTML= '';
+  const url = new URL(window.location.href);
+  const searchTerm = url.searchParams.get('search')?.toLowerCase() || '';
 
-  products.forEach((product)=>{
+  const searchInput = document.querySelector('.js-input-button');
+  if (searchInput) {
+    searchInput.value = url.searchParams.get('search') || '';
+  }
+
+  let productsHTML= ``;
+
+  const filtered= products.filter((product) => {
+    return product.name.toLowerCase().includes(searchTerm);
+  })
+
+  const gridEl = document.querySelector('.js-products-grid');
+
+  if(filtered.length === 0){
+    gridEl.classList.add('empty-grid');
+
+    productsHTML += `
+      <div class="no-results">
+        <h2>No products found<span class="highlight"> for “laptop”</span></h2>
+        <p>We couldn’t find any items matching your search. Try adjusting your keywords or browse our full catalog below.</p>
+        <a href="amazon.html">View all products</a>
+      </div>
+    `;
+    document.querySelector('.js-products-grid').innerHTML = productsHTML;
+    return;
+  }
+
+  gridEl.classList.remove('empty-grid');
+  filtered.forEach((product)=>{
     productsHTML+= `
       <div class="product-container">
         <div class="product-image-container">
@@ -78,3 +107,12 @@ function renderProductsGrid() {
     })
   });
 }
+document.querySelector('.js-search-button').addEventListener('click', () => {
+  const input = document.querySelector('.js-input-button');
+  const searchValue = input.value.trim();
+
+  if (searchValue) {
+    const encoded = encodeURIComponent(searchValue);
+    window.location.href = `amazon.html?search=${encoded}`;
+  }
+});
