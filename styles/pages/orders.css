@@ -89,9 +89,6 @@
   padding: 40px 25px;
   border: 1px solid rgb(213, 217, 217);
   border-top: none;
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-
   display: grid;
   grid-template-columns: 110px 1fr 220px;
   column-gap: 35px;
@@ -218,3 +215,25 @@
     padding: 12px;
   }
 }
+
+.cancel-order-button {
+  text-align: center;
+  width: 100%;
+  background-color: rgb(254, 195, 35);
+  border: 1px solid rgb(215, 212, 204);
+  color: #111111b3;
+  margin-top: 15px;
+  padding: 19px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  border-radius: 0;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancel-order-button:hover {
+  background: #f1b213;
+}
+

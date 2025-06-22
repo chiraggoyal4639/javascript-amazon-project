@@ -14,3 +14,10 @@ export function getOrderTime(orderTime){
   return `${day} ${month}`;
 }
 
+export function cancelOrder(orderId) {
+  const idx = orders.findIndex(order => order.id === orderId);
+  if (idx !== -1) {
+    orders.splice(idx, 1);
+    saveToStorage('orders', orders);
+  }
+}

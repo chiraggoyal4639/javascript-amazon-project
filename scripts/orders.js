@@ -1,11 +1,12 @@
 import { formatCurrency, getItemById } from "./utils/utils.js";
 import { addToCartArray, updateCartQuantity, getCartQuantity } from "../data/cart.js";
 import { products, loadProductsFetch } from "../data/products.js";
-import { orders, getOrderTime } from "./utils/orders-utils.js";
+import { orders, getOrderTime, cancelOrder } from "./utils/orders-utils.js";
 
 function addOrderHTML(){
   let ordersGridElement = document.querySelector('.js-orders-grid');
-
+  ordersGridElement.innerHTML = '';
+  
   orders.forEach((order) => {
     ordersGridElement.innerHTML += `
       <div class="order-container">
@@ -27,6 +28,14 @@ function addOrderHTML(){
         </div>
 
         <div class="order-details-grid js-${order.id}-details-grid"></div>
+
+        <div class="order-footer">
+          <button 
+            class="cancel-order-button button-secondary js-cancel-order"
+            data-order-id="${order.id}">
+            Cancel order
+          </button>
+        </div>
       </div>
     `;
     let orderDetailsGridElement = document.querySelector(`.js-${order.id}-details-grid`);
@@ -79,6 +88,14 @@ function addOrderHTML(){
       setTimeout(() => button.textContent = 'Buy it again', 2000);
     });
   });
+  document.querySelectorAll('.js-cancel-order').forEach(button => {
+    button.addEventListener('click', () => {
+      const orderId = button.dataset.orderId;
+      cancelOrder(orderId);
+      addOrderHTML();
+    });
+  });
+
   document.querySelector('.js-cart-quantity').innerText = getCartQuantity();
 }
 
