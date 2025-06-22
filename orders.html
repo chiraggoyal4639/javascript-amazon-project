@@ -57,11 +57,6 @@
       <div class="orders-grid js-orders-grid">
       </div>
     </div>
-    <script type="module">
-      import { loadPage } from './data/orders.js';
-      import { getCartQuantity } from './data/cart.js'
-      document.querySelector('.js-cart-quantity').innerText = getCartQuantity();
-      loadPage();
-    </script>
+    <script type="module" src="./scripts/orders.js"></script>
   </body>
 </html>

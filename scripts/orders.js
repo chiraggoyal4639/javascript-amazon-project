@@ -1,21 +1,9 @@
-import { formatCurrency, getItemById } from "../scripts/utils/utils.js";
-import { saveToStorage, addToCartArray, updateCartQuantity } from "./cart.js";
-import { products, loadProductsFetch } from "./products.js";
+import { formatCurrency, getItemById } from "./utils/utils.js";
+import { addToCartArray, updateCartQuantity, getCartQuantity } from "../data/cart.js";
+import { products, loadProductsFetch } from "../data/products.js";
+import { orders, getOrderTime } from "./utils/orders-utils.js";
 
-export const orders = JSON.parse(localStorage.getItem('orders')) || [];
-
-export function addOrder(order){
-  orders.unshift(order);
-  saveToStorage('orders', orders);
-}
-export function getOrderTime(orderTime){
-  const date = new Date(orderTime);
-  const day = date.getUTCDate();
-  const month = date.toLocaleString("en-US", { month: "long", timeZone: "UTC" });
-  return `${day} ${month}`;
-}
-
-export function addOrderHTML(){
+function addOrderHTML(){
   let ordersGridElement = document.querySelector('.js-orders-grid');
 
   orders.forEach((order) => {
@@ -91,9 +79,10 @@ export function addOrderHTML(){
       setTimeout(() => button.textContent = 'Buy it again', 2000);
     });
   });
+  document.querySelector('.js-cart-quantity').innerText = getCartQuantity();
 }
 
-export async function loadPage() {
+async function loadPage() {
   try {
     await loadProductsFetch();
   } catch (error) {
@@ -101,3 +90,5 @@ export async function loadPage() {
   }
   addOrderHTML();
 }
+
+loadPage();

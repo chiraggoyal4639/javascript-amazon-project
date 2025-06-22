@@ -1,6 +1,7 @@
-import { orders, getOrderTime } from "../data/orders.js";
+import { orders, getOrderTime } from "./utils/orders-utils.js";
 import { getItemById } from "./utils/utils.js";
 import { products, loadProductsFetch } from "../data/products.js";
+import { getCartQuantity } from "../data/cart.js";
 
 function addTrackingHTML() {
   const url = new URL(window.location.href);
@@ -59,8 +60,9 @@ function addTrackingHTML() {
       <div class="progress-bar" style="width:${progress}%"></div>
     </div>
   `;
+  document.querySelector('.js-cart-quantity').innerText = getCartQuantity();
 }
-export async function loadPage() {
+async function loadPage() {
   try {
     await loadProductsFetch();
   } catch (error) {
@@ -68,3 +70,5 @@ export async function loadPage() {
   }
   addTrackingHTML();
 }
+
+loadPage();
