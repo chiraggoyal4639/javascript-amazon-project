@@ -9,14 +9,19 @@ function addTrackingHTML() {
 
   const order = getItemById(orderId, orders);
   const product = order.products.find(product => product.productId == productId);
-  console.log(product);
   const matchingProduct = getItemById(productId, products);
 
   const productName = matchingProduct.name;
-  console.log(productName);
   const productQuantity = product.quantity;
   const deliveryDate = getOrderTime(product.estimatedDeliveryTime);
   const productImage = matchingProduct.image;
+
+  const orderTime = new Date(order.orderTime).getTime();
+  const deliveryTime = new Date(product.estimatedDeliveryTime).getTime();
+  const currentTime = new Date().getTime();
+
+  let progress = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100;
+  progress = Math.max(0, Math.min(100, progress));
 
   const trackingElement = document.querySelector('.js-order-tracking');
   trackingElement.innerHTML = `
@@ -42,16 +47,16 @@ function addTrackingHTML() {
       <div class="progress-label">
         Preparing
       </div>
-      <div class="progress-label current-status">
+      <div class="progress-label ${progress >= 50 ? 'current-status' : ''}">
         Shipped
       </div>
-      <div class="progress-label">
+      <div class="progress-label ${progress === 100 ? 'current-status' : ''}">
         Delivered
       </div>
     </div>
 
     <div class="progress-bar-container">
-      <div class="progress-bar"></div>
+      <div class="progress-bar" style="width:${progress}%"></div>
     </div>
   `;
 }
