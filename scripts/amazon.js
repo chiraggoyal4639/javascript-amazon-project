@@ -4,6 +4,16 @@ import {formatCurrency} from './utils/utils.js'
 
 loadProducts(renderProductsGrid);
 
+function doSearch() {
+  const input = document.querySelector('.js-input-button');
+  const searchValue = input.value.trim();
+  if (searchValue) {
+    const encoded = encodeURIComponent(searchValue);
+    window.location.href = `amazon.html?search=${encoded}`;
+  } else {
+    window.location.href = 'amazon.html';
+  }
+}
 function renderProductsGrid() {
   const url = new URL(window.location.href);
   const searchTerm = url.searchParams.get('search')?.toLowerCase() || '';
@@ -11,6 +21,11 @@ function renderProductsGrid() {
   const searchInput = document.querySelector('.js-input-button');
   if (searchInput) {
     searchInput.value = url.searchParams.get('search') || '';
+    searchInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        doSearch();
+      }
+    });
   }
 
   let productsHTML= ``;
@@ -107,12 +122,6 @@ function renderProductsGrid() {
     })
   });
 }
-document.querySelector('.js-search-button').addEventListener('click', () => {
-  const input = document.querySelector('.js-input-button');
-  const searchValue = input.value.trim();
 
-  if (searchValue) {
-    const encoded = encodeURIComponent(searchValue);
-    window.location.href = `amazon.html?search=${encoded}`;
-  }
-});
+
+document.querySelector('.js-search-button').addEventListener('click', doSearch);
