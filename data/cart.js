@@ -4,6 +4,9 @@ loadFromStorage();
 export function loadFromStorage(){
   cart = JSON.parse(localStorage.getItem('cart')) || [];
 }
+export function updateCartQuantity(){
+  document.querySelector('.js-cart-quantity').innerHTML= getCartQuantity();
+}
 
 export function saveToStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value));

@@ -1,4 +1,4 @@
-import {cart, addToCart, getCartQuantity} from '../data/cart.js';
+import {cart, addToCart, getCartQuantity, updateCartQuantity} from '../data/cart.js';
 import {products, loadProducts} from '../data/products.js';
 import {formatCurrency} from './utils/utils.js'
 
@@ -77,8 +77,4 @@ function renderProductsGrid() {
       updateCartQuantity();
     })
   });
-
-  function updateCartQuantity(){
-    document.querySelector('.js-cart-quantity').innerHTML= getCartQuantity();
-  }
 }

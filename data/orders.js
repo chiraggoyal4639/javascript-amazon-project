@@ -1,5 +1,5 @@
 import { formatCurrency, getItemById } from "../scripts/utils/utils.js";
-import { saveToStorage, getCartQuantity } from "./cart.js";
+import { saveToStorage, addToCartArray, updateCartQuantity } from "./cart.js";
 import { products, loadProductsFetch } from "./products.js";
 
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
@@ -62,7 +62,10 @@ export function addOrderHTML(){
           <div class="product-quantity">
             Quantity: ${product.quantity}
           </div>
-          <button class="buy-again-button button-primary">
+          <button 
+            class="buy-again-button button-primary js-buy-again-button"
+            data-product-id="${productId}"
+            data-product-qty="${product.quantity}">
             <img class="buy-again-icon" src="images/icons/buy-again.png">
             <span class="buy-again-message">Buy it again</span>
           </button>
@@ -77,6 +80,16 @@ export function addOrderHTML(){
         </div>
       `;
     })
+  });
+  document.querySelectorAll('.js-buy-again-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
+      const qty = Number(button.dataset.productQty) || 1;
+      addToCartArray(productId, qty);
+      updateCartQuantity();
+      button.textContent = 'Added!';
+      setTimeout(() => button.textContent = 'Buy it again', 2000);
+    });
   });
 }
 
