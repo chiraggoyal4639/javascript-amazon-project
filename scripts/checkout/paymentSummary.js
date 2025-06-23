@@ -69,22 +69,22 @@ export function renderPaymentSummary() {
   document.querySelector('.js-place-order')
     .addEventListener('click', async () => {
       try{
-        const response = await fetch('https://supersimplebackend.dev/orders', {
-          method : 'POST',
-          headers : {
-            'Content-type': 'application/json'
-          },
-          body : JSON.stringify({
-            cart : cart
-          })
-        });
-
-        const order = await response.json();
-        addOrder(order);
-        cart.length = 0;
-        saveToStorage('cart', cart);
-        updateCartQuantity();
-
+        if(cart.length != 0){
+          const response = await fetch('https://supersimplebackend.dev/orders', {
+            method : 'POST',
+            headers : {
+              'Content-type': 'application/json'
+            },
+            body : JSON.stringify({
+              cart : cart
+            })
+          });
+          const order = await response.json();
+          addOrder(order);
+          cart.length = 0;
+          saveToStorage('cart', cart);
+        }
+              
       } catch (error) {
         alert('Could not place order. Please try again later.');
       }

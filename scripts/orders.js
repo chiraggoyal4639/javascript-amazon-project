@@ -1,12 +1,14 @@
 import { formatCurrency, getItemById } from "./utils/utils.js";
 import { addToCartArray, updateCartQuantity, getCartQuantity } from "../data/cart.js";
 import { products, loadProductsFetch } from "../data/products.js";
-import { orders, getOrderTime, cancelOrder } from "./utils/orders-utils.js";
+import { orders, getOrderTime, cancelOrder, getDeliveryDateWithWeekends } from "./utils/orders-utils.js";
+import { getProgress } from "./utils/tracking-utils.js";
+
 
 function addOrderHTML(){
   let ordersGridElement = document.querySelector('.js-orders-grid');
   ordersGridElement.innerHTML = '';
-  
+
   orders.forEach((order) => {
     ordersGridElement.innerHTML += `
       <div class="order-container">
@@ -43,6 +45,7 @@ function addOrderHTML(){
     order.products.forEach((product) => {
       const productId = product.productId;
       const matchingProduct = getItemById(productId, products);
+      const progress = getProgress(order, product);
 
       orderDetailsGridElement.innerHTML += `
         <div class="product-image-container">
@@ -54,7 +57,7 @@ function addOrderHTML(){
             ${matchingProduct.name}
           </div>
           <div class="product-delivery-date">
-            Arriving on: ${getOrderTime(product.estimatedDeliveryTime)}
+            ${progress == 100 ? 'Arrived' : 'Arriving'} on: ${getDeliveryDateWithWeekends(order.orderTime, product.estimatedDeliveryTime)}
           </div>
           <div class="product-quantity">
             Quantity: ${product.quantity}

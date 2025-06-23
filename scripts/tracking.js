@@ -2,6 +2,7 @@ import { orders, getOrderTime } from "./utils/orders-utils.js";
 import { getItemById } from "./utils/utils.js";
 import { products, loadProductsFetch } from "../data/products.js";
 import { getCartQuantity } from "../data/cart.js";
+import { getProgress } from "./utils/tracking-utils.js";
 
 function addTrackingHTML() {
   const url = new URL(window.location.href);
@@ -17,12 +18,7 @@ function addTrackingHTML() {
   const deliveryDate = getOrderTime(product.estimatedDeliveryTime);
   const productImage = matchingProduct.image;
 
-  const orderTime = new Date(order.orderTime).getTime();
-  const deliveryTime = new Date(product.estimatedDeliveryTime).getTime();
-  const currentTime = new Date().getTime();
-
-  let progress = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100;
-  progress = Math.max(0, Math.min(100, progress));
+  const progress = getProgress(order, product);
 
   const trackingElement = document.querySelector('.js-order-tracking');
   trackingElement.innerHTML = `
